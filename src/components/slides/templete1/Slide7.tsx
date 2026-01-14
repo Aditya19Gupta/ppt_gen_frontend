@@ -42,16 +42,20 @@ export default function Slide7({ title, desc, imageLink }: Slide7Props) {
               height={300}
             />
           ) : (
-            <span className="text-white text-xl font-medium flex items-center justify-center h-full">image here</span>
+            <span className="text-white text-xl font-medium flex items-center justify-center h-full">
+              image here
+            </span>
           )}
         </div>
       </div>
       <div className="absolute border-4 border-blue-950 w-60 bg-white h-12 bottom-36 right-80">
-        <p className="text-blue-950 text-xl font-medium flex items-center justify-center h-full">Image caption here!</p>
+        <p className="text-blue-950 text-xl font-medium flex items-center justify-center h-full">
+          Image caption here!
+        </p>
       </div>
       {/* Blue line at bottom */}
       <Separator className="absolute bottom-14 left-0 right-0 h-2 border-2 border-blue-950 bg-blue-950" />
-      
+
       {/* Logo and page number at bottom */}
       <div className="absolute bottom-4 left-12 right-8 flex items-center justify-between">
         <Image

@@ -69,14 +69,3 @@ export default function Slide5({ title, intro, bullets }: Slide5Props) {
     </div>
   );
 }
-
-// Example usage:
-<Slide5
-  title="Example Title"
-  intro="Example intro"
-  bullets={[
-    { text: "Advanced analytics and real-time reporting." },
-    { text: "Seamless integration with existing workflows." },
-    { text: "Enterprise-grade security and compliance." },
-  ]}
-/>;

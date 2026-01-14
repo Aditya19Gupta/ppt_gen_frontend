@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { presentationData } from '@/config/presentationData';
 import Slide1 from '@/components/slides/templete1/Slide1';
 import Slide2 from '@/components/slides/templete1/Slide2';
 import Slide3 from '@/components/slides/templete1/Slide3';
@@ -36,11 +37,12 @@ export default function Generate() {
     }
     
     setIsGenerating(true);
-    // Here you would typically make an API call to generate the PPT
+    // Show generation screen for 10 seconds
     setTimeout(() => {
       setIsGenerating(false);
-      alert(`PPT generated for topic: "${topic}" with template: "${selectedTemplate}"`);
-    }, 2000);
+      setShowSlidePreview(true);
+      setCurrentSlide(0);
+    }, 10000);
   };
 
   return (
@@ -153,6 +155,25 @@ export default function Generate() {
         </div>
       </div>
 
+      {/* Generation Screen */}
+      {isGenerating && (
+        <div className="fixed inset-0 bg-gradient-to-br from-blue-600 to-indigo-800 z-50 flex items-center justify-center">
+          <div className="text-center text-white">
+            <div className="mb-8">
+              <svg className="animate-spin mx-auto h-16 w-16 text-white mb-4" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+            <h2 className="text-4xl font-bold mb-4">Generating Your Presentation</h2>
+            <p className="text-xl mb-8">Please wait while we create your amazing slides...</p>
+            <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden">
+              <div className="h-full bg-white rounded-full animate-pulse" style={{ animation: 'slide 10s linear infinite' }}></div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Slide Preview Modal - Carousel */}
       {showSlidePreview && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-8">
@@ -199,8 +220,8 @@ export default function Generate() {
                 {/* Slide 2 */}
                 <div className="w-full h-full flex-shrink-0">
                   <Slide2 
-                    title="Second Slide" 
-                    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.."
+                    title={presentationData.presentation.slides["01"].title}
+                    desc={presentationData.presentation.slides["01"].body}
                     imageLink=""
                   />
                 </div>
@@ -210,18 +231,18 @@ export default function Generate() {
                   <Slide3 
                     columns={[
                       {
-                        title: "Title-1",
-                        desc: "This is the first column description with detailed information about the topic being presented in the presentation.",
+                        title: presentationData.presentation.slides["02"].column1.title,
+                        desc: presentationData.presentation.slides["02"].column1.desc,
                         imageLink: ""
                       },
                       {
-                        title: "Title-2", 
-                        desc: "Second column contains additional relevant content that supports the main topic with comprehensive details and examples.",
+                        title: presentationData.presentation.slides["02"].column2.title,
+                        desc: presentationData.presentation.slides["02"].column2.desc,
                         imageLink: ""
                       },
                       {
-                        title: "Title-3",
-                        desc: "Third column provides supplementary information and key takeaways from the presentation content.",
+                        title: presentationData.presentation.slides["02"].column3.title,
+                        desc: presentationData.presentation.slides["02"].column3.desc,
                         imageLink: ""
                       }
                     ]}
@@ -231,7 +252,7 @@ export default function Generate() {
                 {/* Slide 4 */}
                 <div className="w-full h-full flex-shrink-0">
                   <Slide4 
-                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    description={presentationData.presentation.slides["03"].body}
                     imageLink=""
                   />
                 </div>
@@ -239,21 +260,17 @@ export default function Generate() {
                 {/* Slide 5 */}
                 <div className="w-full h-full flex-shrink-0">
                   <Slide5 
-                    title="Key Features"
-                    intro="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                    bullets={[
-                      "Advanced analytics and real-time reporting.",
-                      "Seamless integration with existing workflows.",
-                      "Enterprise-grade security and compliance."
-                    ]}
+                    title={presentationData.presentation.slides["04"].title}
+                    intro={presentationData.presentation.slides["04"].intro}
+                    bullets={presentationData.presentation.slides["04"].bullets}
                   />
                 </div>
 
                 {/* Slide 6 */}
                 <div className="w-full h-full flex-shrink-0">
                   <Slide6 
-                    title="Slide Title"
-                    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    title={presentationData.presentation.slides["05"].title}
+                    desc={presentationData.presentation.slides["05"].body}
                     imageLink1=""
                     imageLink2=""
                   />
@@ -262,8 +279,8 @@ export default function Generate() {
                 {/* Slide 7 */}
                 <div className="w-full h-full flex-shrink-0">
                   <Slide7 
-                    title="Slide Title"
-                    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    title={presentationData.presentation.slides["06"].title}
+                    desc={presentationData.presentation.slides["06"].body}
                     imageLink=""
                   />
                 </div>
@@ -278,8 +295,8 @@ export default function Generate() {
                 {/* Slide 9 */}
                 <div className="w-full h-full flex-shrink-0">
                   <Slide9 
-                    title="Slide Title"
-                    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    title="Visual Data"
+                    desc={presentationData.presentation.slides["06"].body}
                     imageLink=""
                   />
                 </div>
@@ -287,8 +304,8 @@ export default function Generate() {
                 {/* Slide 10 */}
                 <div className="w-full h-full flex-shrink-0">
                   <Slide10 
-                    title="Slide Title"
-                    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    title={presentationData.presentation.slides["08"].title}
+                    desc={presentationData.presentation.slides["08"].body}
                     imageLink=""
                   />
                 </div>
