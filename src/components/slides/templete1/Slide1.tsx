@@ -29,7 +29,7 @@ export default function Slide1({ title }: Slide1Props) {
 
       {/* Main title in center-left */}
       <div className="absolute top-3/4 left-12 transform -translate-y-1/2">
-        <h1 className="text-9xl font-bold text-blue-900">{title}</h1>
+        <h1 className="text-9xl font-bold text-blue-950">{title}</h1>
       </div>
       <Separator className="absolute bottom-14 left-0 right-0 h-2 border-2 border-blue-950 bg-blue-950" />
       {/* Logo and page number at bottom */}

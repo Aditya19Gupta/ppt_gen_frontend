@@ -13,12 +13,8 @@ export default function Slide2({ title, desc, imageLink }: Slide2Props) {
     <div className="relative w-full min-h-[85vh] bg-gray-100">
       {/* Main content - left side with title and description */}
       <div className="absolute top-24 left-12 right-1/2 mr-4">
-        <h1 className="text-7xl font-semibold text-blue-900 mb-6">
-          {title}
-        </h1>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          {desc}
-        </p>
+        <h1 className="text-7xl font-semibold text-blue-950 mb-6">{title}</h1>
+        <p className="text-lg text-gray-700 leading-relaxed">{desc}</p>
       </div>
 
       {/* Right side - image */}
@@ -40,7 +36,7 @@ export default function Slide2({ title, desc, imageLink }: Slide2Props) {
 
       {/* Blue line at bottom */}
       <Separator className="absolute bottom-14 left-0 right-0 h-2 border-2 border-blue-950 bg-blue-950" />
-      
+
       {/* Logo and page number at bottom */}
       <div className="absolute bottom-4 left-12 right-8 flex items-center justify-between">
         <Image
