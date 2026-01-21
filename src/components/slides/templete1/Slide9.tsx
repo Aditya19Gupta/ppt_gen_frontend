@@ -1,14 +1,21 @@
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import React from "react";
+import InlineEditableText from "@/components/ui/InlineEditableText";
+import { getFontSize, getColor } from "@/handlers/ppt";
 
 interface Slide9Props {
-  title: string;
-  desc: string;
+  title: string | { text: string; fontSize?: string; color?: string };
+  desc: string | { text: string; fontSize?: string; color?: string };
   imageLink?: string;
+  onTextUpdate?: (
+    elementType: string,
+    updatedContent: { text: string; fontSize?: string; color?: string }
+  ) => void;
+  onContentChange?: () => void;
 }
 
-export default function Slide9({ title, desc, imageLink }: Slide9Props) {
+export default function Slide9({ title, desc, imageLink, onTextUpdate, onContentChange }: Slide9Props) {
   return (
     <div className="relative w-full min-h-[85vh] bg-gray-100">
       {/* Title at top */}
@@ -17,11 +24,53 @@ export default function Slide9({ title, desc, imageLink }: Slide9Props) {
       <div className="grid grid-cols-2 pt-16 px-16">
         <div className="mb-12">
           <div className="text-start">
-            <h1 className="text-7xl font-semibold text-blue-950 mb-8">{title}</h1>
+            <InlineEditableText
+              textContent={
+                typeof title === "string"
+                  ? { text: title }
+                  : title || { text: "Title" }
+              }
+              onTextUpdate={(updatedContent) =>
+                onTextUpdate?.("title", updatedContent)
+              }
+              elementType="subtitle"
+              slideIndex={8}
+              onContentChange={onContentChange || (() => {})}
+            >
+              <h1 className={`text-7xl font-semibold mb-8 ${getFontSize(
+                typeof title === "string" ? { text: title } : title || {},
+                "text-7xl"
+              )} ${getColor(
+                typeof title === "string" ? { text: title } : title || {},
+                "text-blue-950"
+              )}`}>
+                {typeof title === 'string' ? title : title?.text || 'Title'}
+              </h1>
+            </InlineEditableText>
           </div>
-          <p className="text-gray-700 leading-relaxed text-start text-lg mr-5">
-            {desc}
-          </p>
+          <InlineEditableText
+            textContent={
+              typeof desc === "string"
+                ? { text: desc }
+                : desc || { text: "" }
+            }
+            onTextUpdate={(updatedContent) =>
+              onTextUpdate?.("desc", updatedContent)
+            }
+            elementType="body"
+            slideIndex={8}
+            onContentChange={onContentChange || (() => {})}
+          >
+            <p className={`leading-relaxed text-start mr-5 ${getFontSize(
+              typeof desc === "string" ? { text: desc } : desc || {},
+              "text-lg"
+            )} ${getColor(
+              typeof desc === "string" ? { text: desc } : desc || {},
+              "text-gray-700"
+            )}`}>
+              {typeof desc === 'string' ? desc : desc?.text || ''}
+            </p>
+          </InlineEditableText>
         </div>
         <div className="w-full h-[50vh] bg-sky-600 rounded-lg overflow-hidden mt-10">
           {imageLink ? (
@@ -53,7 +102,7 @@ export default function Slide9({ title, desc, imageLink }: Slide9Props) {
           width={1000}
           height={24}
         />
-        <span className="text-gray-600 font-medium">07</span>
+        <span className="text-gray-600 font-medium">08</span>
       </div>
     </div>
   );

@@ -2,13 +2,8 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import React from "react";
 
-interface Slide10Props {
-  title: string;
-  desc: string;
-  imageLink?: string;
-}
 
-export default function Slide10({ title, desc, imageLink }: Slide10Props) {
+export default function Slide10() {
   return (
     <div className="relative w-full min-h-[85vh] bg-gray-100">
       {/* White circle at top */}
@@ -44,7 +39,7 @@ export default function Slide10({ title, desc, imageLink }: Slide10Props) {
           width={1000}
           height={24}
         />
-        <span className="text-gray-600 font-medium">08</span>
+        <span className="text-gray-600 font-medium">09</span>
       </div>
     </div>
   );

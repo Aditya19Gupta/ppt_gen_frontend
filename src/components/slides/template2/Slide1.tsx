@@ -1,16 +1,22 @@
 import Image from "next/image";
 import React from "react";
+import InlineEditableText from "@/components/ui/InlineEditableText";
+import { getFontSize, getColor } from "@/handlers/ppt";
 
 interface Slide1Props {
-  title?: string;
-  subtitle?: string;
+  title?: string | { text: string; fontSize?: number; color?: string };
+  subtitle?: string | { text: string; fontSize?: number; color?: string };
   imageLink?:string;
+  onTextUpdate?: (elementType: string, updatedContent: { text: string; fontSize?: number; color?: string }) => void;
+  onContentChange?: () => void;
 }
 
 export default function Slide1({
   title = "Slide Title",
   subtitle = "Clean Presentation Templates",
   imageLink,
+  onTextUpdate,
+  onContentChange
 }: Slide1Props) {
   return (
     <div className="relative w-full min-h-[85vh] bg-[#113029] overflow-hidden">
@@ -29,12 +35,28 @@ export default function Slide1({
       <div className="relative h-full flex items-center px-16 py-20">
         {/* Left Side - Text Content */}
         <div className="flex-1 z-10">
-          <h1 className="absolute bottom-16 left-14 text-9xl font-extrabold text-white leading-tight mb-4">
-            {title}
-          </h1>
-          <p className="text-2xl text-gray-300 font-light absolute bottom-16 left-16">
-            {subtitle}
-          </p>
+          <InlineEditableText
+            textContent={typeof title === 'string' ? { text: title } : title || { text: 'Title' }}
+            onTextUpdate={(updatedContent) => onTextUpdate?.('title', updatedContent)}
+            elementType="title"
+            slideIndex={0}
+            onContentChange={onContentChange || (() => {})}
+          >
+            <h1 className={`absolute bottom-16 left-14 font-extrabold leading-tight mb-4 ${getFontSize(typeof title === 'string' ? { text: title } : title || {}, 'text-9xl')} ${getColor(typeof title === 'string' ? { text: title } : title || {}, 'text-white')}`}>
+              {typeof title === 'string' ? title : title?.text || 'Title'}
+            </h1>
+          </InlineEditableText>
+          <InlineEditableText
+            textContent={typeof subtitle === 'string' ? { text: subtitle } : subtitle || { text: 'Subtitle' }}
+            onTextUpdate={(updatedContent) => onTextUpdate?.('subtitle', updatedContent)}
+            elementType="subtitle"
+            slideIndex={0}
+            onContentChange={onContentChange || (() => {})}
+          >
+            <p className={`text-gray-300 font-light absolute bottom-16 left-16 ${getFontSize(typeof subtitle === 'string' ? { text: subtitle } : subtitle || {}, 'text-2xl')} ${getColor(typeof subtitle === 'string' ? { text: subtitle } : subtitle || {}, 'text-gray-300')}`}>
+              {typeof subtitle === 'string' ? subtitle : subtitle?.text || 'Subtitle'}
+            </p>
+          </InlineEditableText>
         </div>
 
         {/* Right Side - Image Placeholder */}

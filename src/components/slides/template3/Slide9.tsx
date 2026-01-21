@@ -11,12 +11,13 @@ interface Slide9Props {
   item2Desc?: string;
   item3Title?: string;
   item3Desc?: string;
-  highlightTitle?: string;
-  highlightDesc?: string;
-  image?: {
-    imagePrompt?: string;
-    imageUrl?: string;
-  };
+  item4Title?: string;
+  item4Desc?: string;
+  item1Image?: { imagePrompt?: string; imageUrl?: string };
+  item2Image?: { imagePrompt?: string; imageUrl?: string };
+  item3Image?: { imagePrompt?: string; imageUrl?: string };
+  item4Image?: { imagePrompt?: string; imageUrl?: string };
+  leftImage?: { imagePrompt?: string; imageUrl?: string };
 }
 
 export default function Slide9({
@@ -28,15 +29,27 @@ export default function Slide9({
   item2Desc,
   item3Title,
   item3Desc,
-  highlightTitle,
-  highlightDesc,
-  image,
+  item4Title,
+  item4Desc,
+  item1Image,
+  item2Image,
+  item3Image,
+  item4Image,
+  leftImage,
 }: Slide9Props) {
   return (
     <div className="relative w-full min-h-[85vh] bg-white overflow-hidden">
       <div className="grid grid-cols-2 h-[85vh]">
-        <div className="h-full bg-gray-900">
-          
+        <div className="h-full bg-gray-900 overflow-hidden">
+          {leftImage?.imageUrl ? (
+            <Image
+              src={leftImage.imageUrl}
+              alt={leftImage.imagePrompt || ""}
+              width={800}
+              height={600}
+              className="w-full h-full object-cover"
+            />
+          ) : null}
         </div>
         <div className="py-20 px-10 h-full w-full">
           <h1 className="text-3xl font-bold text-[#2D3139]">{title}</h1>
@@ -45,40 +58,34 @@ export default function Slide9({
           </p>
           <Separator className="max-w-10 h-1 border border-[#2D3139] mt-4" />
           <div className="mt-16 grid-cols-2 grid gap-4">
-            <div className="flex flex-col items-start p-4">
-              <div className="w-8 h-8 rounded-full border border-[#2D3139] flex items-center justify-center mb-2">
-                <div className="w-4 h-4 rounded-full bg-[#2D3139]"></div>
+            {[
+              { title: item1Title, desc: item1Desc, image: item1Image, dark: false },
+              { title: item2Title, desc: item2Desc, image: item2Image, dark: true },
+              { title: item3Title, desc: item3Desc, image: item3Image, dark: false },
+              { title: item4Title, desc: item4Desc, image: item4Image, dark: false },
+            ].map((item, index) => (
+              <div key={index} className={`flex flex-col items-start p-4 ${item.dark ? 'bg-[#2D3139] rounded-md' : ''}`}>
+                {item.image?.imageUrl ? (
+                  <div className={`w-12 h-12 rounded-full overflow-hidden border-2 ${item.dark ? 'border-white' : 'border-[#2D3139]'} mb-2`}>
+                    <Image
+                      src={item.image.imageUrl}
+                      alt={item.image.imagePrompt || ""}
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className={`w-8 h-8 rounded-full border ${item.dark ? 'border-white' : 'border-[#2D3139]'} flex items-center justify-center mb-2`}>
+                    <div className={`w-4 h-4 rounded-full ${item.dark ? 'bg-white' : 'bg-[#2D3139]'}`}></div>
+                  </div>
+                )}
+                <h3 className={`text-sm font-bold ${item.dark ? 'text-white' : 'text-[#2D3139]'}`}>{item.title}</h3>
+                <p className={`text-sm font-extralight ${item.dark ? 'text-white' : 'text-[#2D3139]'}`}>
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-[#2D3139]">{item1Title}</h3>
-              <p className="text-sm font-extralight text-[#2D3139]">
-                {item1Desc}
-              </p>
-            </div>
-            <div className="flex flex-col items-start bg-[#2D3139] rounded-md p-4">
-              <div className="w-8 h-8 rounded-full border border-white flex items-center justify-center mb-2">
-                <div className="w-4 h-4 rounded-full bg-white"></div>
-              </div>
-              <h3 className="text-sm font-bold text-white">{item2Title}</h3>
-              <p className="text-sm font-extralight text-white">{item2Desc}</p>
-            </div>
-            <div className="flex flex-col items-start p-4">
-              <div className="w-8 h-8 rounded-full border border-[#2D3139] flex items-center justify-center mb-2">
-                <div className="w-4 h-4 rounded-full bg-[#2D3139]"></div>
-              </div>
-              <h3 className="text-sm font-bold text-[#2D3139]">{item3Title}</h3>
-              <p className="text-sm font-extralight text-[#2D3139]">
-                {item3Desc}
-              </p>
-            </div>
-            <div className="flex flex-col items-start p-4">
-              <div className="w-8 h-8 rounded-full border border-[#2D3139] flex items-center justify-center mb-2">
-                <div className="w-4 h-4 rounded-full bg-[#2D3139]"></div>
-              </div>
-              <h3 className="text-sm font-bold text-[#2D3139]">{item3Title}</h3>
-              <p className="text-sm font-extralight text-[#2D3139]">
-                {item3Desc}
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </div>

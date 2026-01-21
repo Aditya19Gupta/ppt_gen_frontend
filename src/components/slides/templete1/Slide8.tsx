@@ -43,7 +43,7 @@ export default function Slide8({ imageLink }: Slide8Props) {
           width={1000}
           height={24}
         />
-        <span className="text-gray-600 font-medium">06</span>
+        <span className="text-gray-600 font-medium">07</span>
       </div>
     </div>
   );

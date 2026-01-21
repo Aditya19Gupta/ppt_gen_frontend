@@ -1,18 +1,30 @@
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import React from "react";
+import InlineEditableText from "@/components/ui/InlineEditableText";
+import { getFontSize, getColor } from "@/handlers/ppt";
 
 interface ColumnData {
-  title: string;
-  desc: string;
+  title: string | { text: string; fontSize?: number; color?: string };
+  desc: string | { text: string; fontSize?: number; color?: string };
   imageLink: string;
 }
 
 interface Slide3Props {
   columns: ColumnData[];
+  onTextUpdate?: (
+    columnIndex: number,
+    elementType: string,
+    updatedContent: { text: string; fontSize?: number; color?: string }
+  ) => void;
+  onContentChange?: () => void;
 }
 
-export default function Slide3({ columns }: Slide3Props) {
+export default function Slide3({
+  columns,
+  onTextUpdate,
+  onContentChange,
+}: Slide3Props) {
   return (
     <div className="relative w-full min-h-[85vh] bg-gray-100">
       {/* Three columns layout */}
@@ -21,7 +33,7 @@ export default function Slide3({ columns }: Slide3Props) {
           <div key={index} className="flex-1 flex flex-col text-center">
             {/* Image at top of each column */}
             <div
-              className={`w-52 h-52 ${
+              className={`w-72 h-72 ${
                 index === 0
                   ? "bg-sky-600"
                   : index === 1
@@ -36,23 +48,83 @@ export default function Slide3({ columns }: Slide3Props) {
                   className="w-full h-full object-cover"
                   width={300}
                   height={300}
+                  onError={(e) => console.error(`Image failed to load:`, e)}
+                  onLoad={() =>
+                    console.log(`Image loaded successfully:`, column.imageLink)
+                  }
                 />
               ) : (
                 <span className="text-white text-xl font-medium">
-                  image here
+                  No image ({column.imageLink})
                 </span>
               )}
             </div>
 
             {/* Title */}
-            <h3 className="text-4xl font-semibold text-blue-950 mb-4 mt-6">
-              {column.title}
-            </h3>
+            <InlineEditableText
+              textContent={
+                typeof column.title === "string"
+                  ? { text: column.title }
+                  : column.title || { text: "Untitled" }
+              }
+              onTextUpdate={(updatedContent) =>
+                onTextUpdate?.(index, "title", updatedContent)
+              }
+              elementType="mini-title"
+              slideIndex={2}
+              onContentChange={onContentChange || (() => {})}
+            >
+              <h1
+                className={`font-bold mb-4 mt-6 ${getFontSize(
+                  typeof column.title === "string"
+                    ? { text: column.title }
+                    : column.title || { text: "" },
+                  "text-4xl"
+                )} ${getColor(
+                  typeof column.title === "string"
+                    ? { text: column.title }
+                    : column.title || { text: "" },
+                  "text-blue-950"
+                )}`}
+              >
+                {typeof column.title === "string"
+                  ? column.title
+                  : column.title?.text || "Untitled"}
+              </h1>
+            </InlineEditableText>
 
             {/* Description */}
-            <p className="text-gray-700 leading-relaxed flex-1">
-              {column.desc}
-            </p>
+            <InlineEditableText
+              textContent={
+                typeof column.desc === "string"
+                  ? { text: column.desc }
+                  : column.desc || { text: "Description" }
+              }
+              onTextUpdate={(updatedContent) =>
+                onTextUpdate?.(index, "desc", updatedContent)
+              }
+              elementType="body"
+              slideIndex={2}
+              onContentChange={onContentChange || (() => {})}
+            >
+              <p
+                className={`leading-relaxed flex-1 ${getFontSize(
+                  typeof column.desc === "string"
+                    ? { text: column.desc }
+                    : column.desc || { text: "" },
+                  "text-base"
+                )} ${getColor(
+                  typeof column.desc === "string"
+                    ? { text: column.desc }
+                    : column.desc || { text: "" },
+                  "text-gray-700"
+                )}`}
+              >
+                {typeof column.desc === "string"
+                  ? column.desc
+                  : column.desc?.text || ""}
+              </p>
+            </InlineEditableText>
           </div>
         ))}
       </div>

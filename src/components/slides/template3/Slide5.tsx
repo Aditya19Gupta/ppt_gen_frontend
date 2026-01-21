@@ -57,7 +57,7 @@ export default function Slide5({
     const targetValue2 = parseInt(bar2Value);
     const targetValue3 = parseInt(bar3Value);
 
-    const duration = 1500; // 1.5 seconds animation
+    const duration = 1500; //conso 1.5 seconds animation
     const steps = 60;
     const interval = duration / steps;
 

@@ -51,49 +51,73 @@ export default function Slide6({
     <div className="relative w-full min-h-[85vh] bg-white overflow-hidden px-16 py-28">
       <div className="grid grid-cols-4 gap-2">
         <div className="flex flex-col gap-2 text-center items-center">
-          <Image
-            src={image1?.imageUrl || ""}
-            alt={image1?.imagePrompt || ""}
-            width={200}
-            height={200}
-            className="w-full h-56"
-          />
+          {image1?.imageUrl ? (
+            <Image
+              src={image1.imageUrl}
+              alt={image1.imagePrompt || ""}
+              width={200}
+              height={200}
+              className="w-full h-56 object-cover"
+            />
+          ) : (
+            <div className="w-full h-56 bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">No image</span>
+            </div>
+          )}
           <GraduationCap className="w-12 h-12 bg-gray-200 p-2 rounded-full -mt-7" />
           <h3 className="text-2xl font-semibold text-gray-900">{col1Title}</h3>
           <p className="text-gray-600">{col1Desc}</p>
         </div>
         <div className="flex flex-col gap-2 text-center items-center">
-          <Image
-            src={image2?.imageUrl || ""}
-            alt={image2?.imagePrompt || ""}
-            width={200}
-            height={200}
-            className="w-full h-56"
-          />
+          {image2?.imageUrl ? (
+            <Image
+              src={image2.imageUrl}
+              alt={image2.imagePrompt || ""}
+              width={200}
+              height={200}
+              className="w-full h-56 object-cover"
+            />
+          ) : (
+            <div className="w-full h-56 bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">No image</span>
+            </div>
+          )}
           <GraduationCap className="w-12 h-12 bg-gray-200 p-2 rounded-full -mt-7" />
           <h3 className="text-2xl font-semibold text-gray-900">{col2Title}</h3>
           <p className="text-gray-600">{col2Desc}</p>
         </div>
         <div className="flex flex-col gap-2 text-center items-center">
-          <Image
-            src={image3?.imageUrl || ""}
-            alt={image3?.imagePrompt || ""}
-            width={200}
-            height={200}
-            className="w-full h-56"
-          />
+          {image3?.imageUrl ? (
+            <Image
+              src={image3.imageUrl}
+              alt={image3.imagePrompt || ""}
+              width={200}
+              height={200}
+              className="w-full h-56 object-cover"
+            />
+          ) : (
+            <div className="w-full h-56 bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">No image</span>
+            </div>
+          )}
           <GraduationCap className="w-12 h-12 bg-gray-200 p-2 rounded-full -mt-7" />
-          <h3 className="text-2xl font-semibold text-gray-900">{col2Title}</h3>
-          <p className="text-gray-600">{col2Desc}</p>
+          <h3 className="text-2xl font-semibold text-gray-900">{col3Title}</h3>
+          <p className="text-gray-600">{col3Desc}</p>
         </div>
         <div className="flex flex-col gap-2 text-center items-center">
-          <Image
-            src={image4?.imageUrl || ""}
-            alt={image4?.imagePrompt || ""}
-            width={200}
-            height={200}
-            className="w-full h-56"
-          />
+          {image4?.imageUrl ? (
+            <Image
+              src={image4.imageUrl}
+              alt={image4.imagePrompt || ""}
+              width={200}
+              height={200}
+              className="w-full h-56 object-cover"
+            />
+          ) : (
+            <div className="w-full h-56 bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">No image</span>
+            </div>
+          )}
           <GraduationCap className="w-12 h-12 bg-gray-200 p-2 rounded-full -mt-7" />
           <h3 className="text-2xl font-semibold text-gray-900">{col4Title}</h3>
           <p className="text-gray-600">{col4Desc}</p>

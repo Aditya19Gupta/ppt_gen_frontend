@@ -14,7 +14,10 @@ export default function Slide1() {
       </div>
       <div className="absolute top-1/3">
         <h1 className="text-8xl text-white font-extrabold">Thank you!</h1>
-        <p className="text-2xl text-white font-normal mt-10  w-3/4">If there’s any question please kindly to ask me. <span className="font-semibold">Let’s Discuss</span></p>
+        <p className="text-2xl text-white font-normal mt-10  w-3/4">
+          If there’s any question please kindly to ask me.{" "}
+          <span className="font-semibold">Let’s Discuss</span>
+        </p>
       </div>
     </div>
   );

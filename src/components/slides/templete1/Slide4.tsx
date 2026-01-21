@@ -1,13 +1,20 @@
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import React from "react";
+import InlineEditableText from "@/components/ui/InlineEditableText";
+import { getFontSize, getColor } from "@/handlers/ppt";
 
 interface Slide4Props {
-  imageLink?: string;
-  description: string;
+  description: string | { text: string; fontSize?: string; color?: string };
+  imageLink: string;
+  onTextUpdate?: (
+    elementType: string,
+    updatedContent: { text: string; fontSize?: string; color?: string }
+  ) => void;
+  onContentChange?: () => void;
 }
 
-export default function Slide4({ imageLink, description }: Slide4Props) {
+export default function Slide4({ imageLink, description, onTextUpdate, onContentChange }: Slide4Props) {
   return (
     <div className="relative w-full min-h-[85vh] bg-gray-100">
       {/* Image placeholder in center */}
@@ -29,14 +36,36 @@ export default function Slide4({ imageLink, description }: Slide4Props) {
 
       {/* Description text below image */}
       <div className="absolute mt-10 left-12 right-12">
-        <p className="text-gray-700 leading-relaxed text-center">
-          {description}
-        </p>
+        <InlineEditableText
+          textContent={
+            typeof description === "string"
+              ? { text: description }
+              : description || { text: "" }
+          }
+          onTextUpdate={(updatedContent) =>
+            onTextUpdate?.("description", updatedContent)
+          }
+          elementType="body"
+          slideIndex={3}
+          onContentChange={onContentChange || (() => {})}
+        >
+          <p className={`leading-relaxed text-center ${getFontSize(
+            typeof description === "string" ? { text: description } : description || {},
+            "text-base"
+          )} ${getColor(
+            typeof description === "string" ? { text: description } : description || {},
+            "text-gray-700"
+          )}`}>
+            {typeof description === "string"
+              ? description
+              : description?.text || ""}
+          </p>
+        </InlineEditableText>
       </div>
 
       {/* Blue line at bottom */}
       <Separator className="absolute bottom-14 left-0 right-0 h-2 border-2 border-blue-950 bg-blue-950" />
-      
+
       {/* Logo and page number at bottom */}
       <div className="absolute bottom-4 left-12 right-8 flex items-center justify-between">
         <Image
